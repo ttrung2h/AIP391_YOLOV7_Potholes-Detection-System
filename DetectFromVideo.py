@@ -1,20 +1,19 @@
 import cv2
 import os
 import sys
-sys.path.append('D:\FPT\ky5\AIP391\My Project\data')
-from src.detector import Detector
+from detector import Detector
 import time
 import torch
 from datetime import datetime
 import geocoder
 import json
-
+import argparse
 
 # load model
 start_time = time.time()
-sys.path.append('D:\FPT\ky5\AIP391\My Project\data\yolov7')
+sys.path.append('yolov7')
 from models.experimental import attempt_load
-model = attempt_load(r"D:\FPT\ky5\AIP391\My Project\data\yolov7\runs\train\last.pt", map_location=torch.device('cuda:0'))  # load FP32 model
+model = attempt_load(r"yolov7\runs\train\last.pt", map_location=torch.device('cuda:0'))  # load FP32 model
 print("Done after %s seconds" % (time.time() - start_time))
 
 
@@ -22,8 +21,8 @@ print("Done after %s seconds" % (time.time() - start_time))
 classes_to_filter = None
 opt  = {
     "model" : model,
-    "weights": r"D:\FPT\ky5\AIP391\My Project\data\yolov7\runs\train\last.pt", # Path to weights file default weights are for nano model
-    "yaml"   : r"D:\FPT\ky5\AIP391\My Projecqt\data\yolov7\data\mydataset.yaml",
+    "weights": r"yolov7\runs\train\last.pt", # Path to weights file default weights are for nano model
+    "yaml"   : r"yolov7\data\mydataset.yaml",
     "img-size": 640, # default image size
     "conf-thres": 0.1, # confidence threshold for inference.
     "iou-thres" : 0.45, # NMS IoU threshold for inference.
@@ -47,11 +46,27 @@ def export_information(number_potholes,frame_number,time,path_export):
         json.dump(info, outfile,indent=4)
     return info
 
-
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--video', type=str, default='0', help='video url. If you do not provide any video url, the program will use your webcam')
+    parser.add_argument('--trackingfolder', type=str, default='tracking_data', help='folder to save tracking data')
+    config = parser.parse_args()
+    video_url = config.video
+    
+    # Check must contain link video
+    if config.video == None:
+        print('Please input link of video')
+        exit()
+    
+    # Check if webcam or vitual camera
+    try:
+        if int(config.video) >=0:
+            video_url = int(config.video)
+    except:
+        pass
     
     # Set path to save data
-    tracking_data_url = r'D:\FPT\ky5\AIP391\My Project\data\tracking_data\\'
+    tracking_data_url = config.trackingfolder + "/"
     
     # Create folder to save data in day-month-year_hour-minute-second
     folderCurrentTimeChecking= tracking_data_url+datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
@@ -61,15 +76,10 @@ if __name__ == "__main__":
     if not os.path.exists(folderCurrentTimeChecking):
         os.makedirs(folderCurrentTimeChecking) 
     
-    
-    video_url = 0
-    
     # capture from any video
     vid = cv2.VideoCapture(video_url)
     currentFrame = 0
-
-       
-    # loop for extracting all frame in video and outloop when click 'q'
+    # # loop for extracting all frame in video and outloop when click 'q'
     while vid.isOpened():
         new_frame_time = time.time()
         success, frame = vid.read()
@@ -98,3 +108,4 @@ if __name__ == "__main__":
 
     vid.release()
     cv2.destroyAllWindows()
+   

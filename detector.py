@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append('D:\FPT\ky5\AIP391\My Project\data\yolov7')
+sys.path.append(r'D:\FPT\ky5\AIP391\My Project\Project\yolov7')
 
 import argparse
 import time
@@ -16,8 +16,6 @@ from utils.plots import plot_one_box
 from utils.torch_utils import select_device
 
 # set_logging()
-
-
 class Detector:
     def __init__(self,img_from_source,opt ) -> None:
         self.img_from_source = img_from_source
