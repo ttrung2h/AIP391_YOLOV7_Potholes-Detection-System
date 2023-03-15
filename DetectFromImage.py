@@ -10,7 +10,7 @@ sys.path.append('yolov7')
 from models.experimental import attempt_load
 
 classes_to_filter = None
-model = attempt_load(r"yolov7\runs\train\last.pt", map_location=torch.device('cuda:0'))  # load FP32 model
+model = attempt_load(r"weight\last.pt", map_location=torch.device('cuda:0'))  # load FP32 model
 print("--- %s seconds ---" % (time.time() - start_time))
 
 opt  = {

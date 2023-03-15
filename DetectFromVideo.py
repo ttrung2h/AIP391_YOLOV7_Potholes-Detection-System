@@ -13,7 +13,7 @@ import argparse
 start_time = time.time()
 sys.path.append('yolov7')
 from models.experimental import attempt_load
-model = attempt_load(r"yolov7\runs\train\last.pt", map_location=torch.device('cuda:0'))  # load FP32 model
+model = attempt_load(r"weight\last.pt", map_location=torch.device('cuda:0'))  # load FP32 model
 print("Done after %s seconds" % (time.time() - start_time))
 
 
