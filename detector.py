@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(r'D:\FPT\ky5\AIP391\My Project\Project\yolov7')
+sys.path.append(r'yolov7')
 
 import argparse
 import time
