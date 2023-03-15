@@ -1,0 +1,16 @@
+train: ../data_potholes/train
+val: ../data_potholes/test
+nc: 1
+names: ['potholes']
+train: ../data_potholes/train
+val: ../data_potholes/test
+nc: 1
+names: ['potholes']
+train: ../data_potholes/train
+val: ../data_potholes/test
+nc: 1
+names: ['potholes']
+train: ../data_potholes/train
+val: ../data_potholes/test
+nc: 1
+names: ['potholes']
