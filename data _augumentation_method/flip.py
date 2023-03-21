@@ -4,10 +4,10 @@ from PIL import Image, ImageDraw
 import numpy as np  
 import os
 # Read the image and bounding box coordinates
-TRAIN_DIR_IMAGE = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\train\images'
-TRAIN_DIR_LABEL = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\train\labels'
-TEST_DIR_IMAGE = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\test\images'
-TEST_DIR_LABEL = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\test\labels'
+TRAIN_DIR_IMAGE = r'train\images'
+TRAIN_DIR_LABEL = r'train\labels'
+TEST_DIR_IMAGE = r'test\images'
+TEST_DIR_LABEL = r'test\labels'
 class yoloFlipbbox:
     
     def __init__(self, imgfile,labelfile):

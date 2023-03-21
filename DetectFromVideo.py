@@ -8,12 +8,12 @@ from datetime import datetime
 import geocoder
 import json
 import argparse
-
+from ChatBot import ChatBot
 # load model
 start_time = time.time()
 sys.path.append('yolov7')
 from models.experimental import attempt_load
-model = attempt_load(r"weight\last.pt", map_location=torch.device('cuda:0'))  # load FP32 model
+model = attempt_load(r"weight\best_216.pt", map_location=torch.device('cuda:0'))  # load FP32 model
 print("Done after %s seconds" % (time.time() - start_time))
 
 
@@ -46,11 +46,26 @@ def export_information(number_potholes,frame_number,time,path_export):
         json.dump(info, outfile,indent=4)
     return info
 
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--video', type=str, default='0', help='video url. If you do not provide any video url, the program will use your webcam')
     parser.add_argument('--trackingfolder', type=str, default='tracking_data', help='folder to save tracking data')
+    parser.add_argument('--bottoken', type=str, default='6069180604:AAFWUcioYoE_8-myXYsKB5IwxcEKGVtAUPI', help='impute bot token')
+    parser.add_argument('--chatid', type=str, default='-1001833973135', help='impute bot id')
+    
     config = parser.parse_args()
+    # Setup chat bot
+    bot_token = config.bottoken#'6069180604:AAFWUcioYoE_8-myXYsKB5IwxcEKGVtAUPI'
+    chat_id =  config.chatid##-1001833973135
+    send_message_to_bot = False
+    
+    # Check to send information to bot
+    if bot_token != None and chat_id != None:
+        chat_bot = ChatBot(bot_token,chat_id)
+        send_message_to_bot = True
+    
     video_url = config.video
     
     # Check must contain link video
@@ -79,18 +94,20 @@ if __name__ == "__main__":
     # capture from any video
     vid = cv2.VideoCapture(video_url)
     currentFrame = 0
+    prevTime = time.time()
+    currentTime = 0
+    
+    
     # # loop for extracting all frame in video and outloop when click 'q'
     while vid.isOpened():
-        new_frame_time = time.time()
         success, frame = vid.read()
         detector = Detector(frame, opt)
         img,number_potholes = detector.detect_plotbox()
         cv2.imshow(f'Checking camera',frame)
-        
         currentFrame+=1
-        
+        currentTime = time.time()
         # check if frame is not over 10
-        if number_potholes > 2:
+        if number_potholes > 1:
             
             # create folder to save frame information
             path = folderCurrentTimeChecking+'/frame'+str(currentFrame)
@@ -98,11 +115,22 @@ if __name__ == "__main__":
                 os.makedirs(path)
                 # write image and number of potholes to file
                 cv2.imwrite(path+f'/frame{currentFrame}_detectedFrame.jpg',img)
-                
                 # get current time for saving information
                 time_now = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
                 export_information(number_potholes,currentFrame,time_now,path+f'/frame{currentFrame}_detectedFrame.json')
                 
+                # Check gap time for sending message and photo
+                if send_message_to_bot and currentTime - prevTime > 5:
+                    prevTime = currentTime
+                    file = {'photo': open(path+f'/frame{currentFrame}_detectedFrame.jpg', 'rb')}
+                    
+                    with open (path+f'/frame{currentFrame}_detectedFrame.json', 'r') as f:
+                        data = json.load(f)
+                        cap = f"Number of potholes: {data['number_potholes']}\nLocation: {data['raw']['loc']}"
+                    chat_bot.sendPhoto(cap,file)
+                    # read file
+                    
+        
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 

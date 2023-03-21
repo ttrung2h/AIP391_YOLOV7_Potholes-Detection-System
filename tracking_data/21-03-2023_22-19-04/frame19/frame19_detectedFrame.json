@@ -1,0 +1,29 @@
+{
+    "address": "Hanoi, Hanoi, VN",
+    "city": "Hanoi",
+    "country": "VN",
+    "hostname": "static.vnpt.vn",
+    "ip": "14.232.143.76",
+    "lat": 21.0245,
+    "lng": 105.8412,
+    "ok": true,
+    "org": "AS45899 VNPT Corp",
+    "postal": "10000",
+    "raw": {
+        "ip": "14.232.143.76",
+        "hostname": "static.vnpt.vn",
+        "city": "Hanoi",
+        "region": "Hanoi",
+        "country": "VN",
+        "loc": "21.0245,105.8412",
+        "org": "AS45899 VNPT Corp",
+        "postal": "10000",
+        "timezone": "Asia/Bangkok",
+        "readme": "https://ipinfo.io/missingauth"
+    },
+    "state": "Hanoi",
+    "status": "OK",
+    "number_potholes": 3,
+    "time": "21-03-2023_22-19-31",
+    "frame_number": 19
+}

@@ -3,10 +3,10 @@ import torchvision
 from PIL import Image
 import random 
 import os
-TRAIN_DIR_IMAGE = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\train\images'
-TRAIN_DIR_LABEL = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\train\labels'
-TEST_DIR_IMAGE = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\test\images'
-TEST_DIR_LABEL = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\test\labels'
+TRAIN_DIR_IMAGE = r'train\images'
+TRAIN_DIR_LABEL = r'train\labels'
+TEST_DIR_IMAGE = r'test\images'
+TEST_DIR_LABEL = r'test\labels'
 class YoloColorFillter:
     def __init__(self, imgfile,labelfile):
         self.imgfile = imgfile

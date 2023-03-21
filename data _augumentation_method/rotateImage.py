@@ -4,10 +4,10 @@ import cv2
 from PIL import Image, ImageDraw
 import matplotlib.pyplot as plt
 import random
-TRAIN_DIR_IMAGE = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\train\images'
-TRAIN_DIR_LABEL = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\train\labels'
-TEST_DIR_IMAGE = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\test\images'
-TEST_DIR_LABEL = r'D:\FPT\ky5\AIP391\My Project\data\data_potholes\test\labels'
+TRAIN_DIR_IMAGE = r'train\images'
+TRAIN_DIR_LABEL = r'train\labels'
+TEST_DIR_IMAGE = r'test\images'
+TEST_DIR_LABEL = r'test\labels'
 # rotate image and bounding box
 class yoloRotatebbox:
     def __init__(self, filename, image_ext,labelfile, angle):
