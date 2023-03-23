@@ -97,22 +97,28 @@ if __name__ == "__main__":
     currentFrame = 0
     prevTime = time.time()
     currentTime = 0
-    start_time = 0
-    pre_time = 0
+ 
     
     # # loop for extracting all frame in video and outloop when click 'q'
     while vid.isOpened():
         success, frame = vid.read()
-        detector = Detector(frame, opt)
         
+        # resize frame
+        new_width = 640*frame.shape[0]//frame.shape[1]
+        frame = cv2.resize(frame, (640, new_width))
+        
+        # detect potholes
+        detector = Detector(frame, opt)
         img,number_potholes = detector.detect_plotbox()
-        # cv2.imshow(f'Checking camera',frame)
+        
+        
+        cv2.imshow(f'Checking camera',img)
         currentFrame+=1
         currentTime = time.time()
        
         
         #check if frame is not over 1
-        if number_potholes > 1:
+        if number_potholes > 2:
             
             # create folder to save frame information
             path = folderCurrentTimeChecking+'/frame'+str(currentFrame)
