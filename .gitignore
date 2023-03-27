@@ -1,3 +1,5 @@
-weight/best_216.pt
-weight/best.pt
-weight/last-tiny.pt
+weight
+test_img
+tracking_data
+test_video
+result_image

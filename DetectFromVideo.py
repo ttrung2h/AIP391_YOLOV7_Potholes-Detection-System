@@ -30,8 +30,8 @@ if __name__ == "__main__":
     parser.add_argument('--weight', type=str, default='weight/best.pt', help='path to weight file')
     parser.add_argument('--video', type=str, default='0', help='video url. If you do not provide any video url, the program will use your webcam')
     parser.add_argument('--trackingfolder', type=str, default='tracking_data', help='folder to save tracking data')
-    parser.add_argument('--bottoken', type=str, default='6069180604:AAFWUcioYoE_8-myXYsKB5IwxcEKGVtAUPI', help='impute bot token')
-    parser.add_argument('--chatid', type=str, default='-1001833973135', help='impute bot id')
+    parser.add_argument('--bottoken', type=str, default=None, help='impute bot token')
+    parser.add_argument('--chatid', type=str, default=None, help='impute bot id')
     config = parser.parse_args()
     
     
